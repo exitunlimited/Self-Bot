@@ -301,22 +301,3 @@ function save_data(filename, data)
 end
 
 
--- Call and postpone execution for cron plugins
-function cron_plugins()
-
-  for name, plugin in pairs(plugins) do
-    -- Only plugins with cron function
-    if plugin.cron ~= nil then
-      plugin.cron()
-    end
-  end
-
-  -- Called again in 2 mins
-  postpone (cron_plugins, false, 120)
-end
-
--- Start and load values
-our_id = 0
-now = os.time()
-math.randomseed(now)
-started = false
